@@ -1,0 +1,91 @@
+[project]
+name = "ices-data-schema-scraper"
+version = "0.0.1"
+description = "ices-data-schema-scraper"
+authors = [
+    {name = "Matt Krainski", email = "matt@gravitalforge.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "playwright>=1.56.0",
+    "typer>=0.20.0",
+]
+
+[project.scripts]
+ices-scraper = "ices_data_schema_scraper.cli:main"
+deduplicate-csv = "deduplicate_csv:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=9.0.1",
+    "darglint>=1.8.1",
+    "ruff>=0.8.0",
+    "coverage>=7.11.3",
+    "pre-commit>=4.0.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "B",      # flake8-bugbear
+    "A",      # flake8-builtins
+    "C4",     # flake8-comprehensions
+    "D",      # pydocstyle (flake8-docstrings)
+    "ERA",    # eradicate (flake8-eradicate)
+    "I",      # isort
+    "N",      # pep8-naming
+    "S",      # flake8-bandit
+]
+ignore = [
+    "D104",   # Missing docstring in public package
+    "D100",   # Missing docstring in public module
+    "D101",   # Missing docstring in public class
+    "D106",   # Missing docstring in public nested class
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]  # Use of assert detected
+
+[tool.ruff.lint.flake8-builtins]
+builtins-ignorelist = ["id"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.ruff.lint.isort]
+known-first-party = []
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
+
+[tool.poe]
+envfile = ".env"
+
+[tool.poe.tasks]
+configure = "./scripts/configure.sh"
+update = "./scripts/update.sh"
+lint = "ruff check ."
+format = "ruff format ."
+lint-fix = "ruff check --fix ."
+test = 'coverage run -m pytest --showlocals'
+hooks-run = "pre-commit run --all-files"
+hooks-update = "pre-commit autoupdate"
+
+[tool.poe.tasks.test-full]
+sequence = [
+  { ref = "test" }
+]
