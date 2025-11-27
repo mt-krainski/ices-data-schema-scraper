@@ -15,6 +15,7 @@ The `configure` command will install all necessary dependencies and configure th
 Run this before first use:
 
 ```bash
+uv sync
 uv run poe configure
 ```
 
