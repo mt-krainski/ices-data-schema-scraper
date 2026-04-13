@@ -19,7 +19,7 @@ deduplicate-csv = "deduplicate_csv:main"
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=9.0.1",
+    "pytest>=9.0.3",
     "darglint>=1.8.1",
     "ruff>=0.15.10",
     "coverage>=7.11.3",
