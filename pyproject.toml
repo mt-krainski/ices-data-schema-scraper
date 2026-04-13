@@ -21,7 +21,7 @@ deduplicate-csv = "deduplicate_csv:main"
 dev = [
     "pytest>=9.0.1",
     "darglint>=1.8.1",
-    "ruff>=0.8.0",
+    "ruff>=0.15.10",
     "coverage>=7.11.3",
     "pre-commit>=4.0.1",
 ]
